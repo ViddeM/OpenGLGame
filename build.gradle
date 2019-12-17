@@ -1,0 +1,194 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+        google()
+    }
+    dependencies {
+
+    }
+}
+
+allprojects {
+    apply plugin: "idea"
+
+    version = '1.0'
+    ext {
+        appName = "Viddes OpenGL app"
+        lwjglVersion = "3.2.3"
+        lwjglNatives = "natives-windows"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+}
+
+project(":") {
+    apply plugin: "idea"
+    apply plugin: "java"
+    apply plugin: "pmd"
+    apply plugin: "findbugs"
+    apply plugin: "checkstyle"
+    apply plugin: "application"
+
+    version = "1.0"
+
+    sourceSets.main.java.srcDirs = ["src"]
+
+    mainClassName = "vm.game.Main"
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+        google()
+    }
+
+    findbugs {
+        ignoreFailures = false
+        effort = "max"
+    }
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+    tasks.withType(Pmd) {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+    pmd {
+        toolVersion "6.8.0"
+        ignoreFailures = false
+        pmdTest.enabled = false
+        consoleOutput false
+        sourceSets = [sourceSets.main]
+        ruleSetFiles = files("config/pmd/ruleSet.xml", "config/pmd/bestpractices.xml", "config/pmd/design.xml", "config/pmd/errorprone.xml")
+    }
+
+    checkstyle {
+        toolVersion "8.11"
+        checkstyleTest.enabled = false
+        ignoreFailures false
+        configFile file("config/checkstyle/checkstyle.xml")
+        maxWarnings 0
+    }
+    checkstyleMain {
+        source = "src/main"
+    }
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.12'
+        compile 'junit:junit:4.12'
+
+        compileOnly 'com.google.code.findbugs:annotations:3.0.1'
+        compileOnly 'com.google.code.findbugs:jsr305:3.0.1'
+
+        testCompileOnly(
+                'junit:junit:4.12'
+        )
+        testImplementation(
+                'org.junit.jupiter:junit-jupiter-api:5.1.0'
+        )
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine:5.1.0',
+                'org.junit.vintage:junit-vintage-engine:5.1.0'
+        )
+
+        implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+        implementation "org.lwjgl:lwjgl"
+        implementation "org.lwjgl:lwjgl-assimp"
+        implementation "org.lwjgl:lwjgl-bgfx"
+        implementation "org.lwjgl:lwjgl-cuda"
+        implementation "org.lwjgl:lwjgl-egl"
+        implementation "org.lwjgl:lwjgl-glfw"
+        implementation "org.lwjgl:lwjgl-jawt"
+        implementation "org.lwjgl:lwjgl-jemalloc"
+        implementation "org.lwjgl:lwjgl-libdivide"
+        implementation "org.lwjgl:lwjgl-llvm"
+        implementation "org.lwjgl:lwjgl-lmdb"
+        implementation "org.lwjgl:lwjgl-lz4"
+        implementation "org.lwjgl:lwjgl-meow"
+        implementation "org.lwjgl:lwjgl-nanovg"
+        implementation "org.lwjgl:lwjgl-nfd"
+        implementation "org.lwjgl:lwjgl-nuklear"
+        implementation "org.lwjgl:lwjgl-odbc"
+        implementation "org.lwjgl:lwjgl-openal"
+        implementation "org.lwjgl:lwjgl-opencl"
+        implementation "org.lwjgl:lwjgl-opengl"
+        implementation "org.lwjgl:lwjgl-opengles"
+        implementation "org.lwjgl:lwjgl-openvr"
+        implementation "org.lwjgl:lwjgl-opus"
+        implementation "org.lwjgl:lwjgl-ovr"
+        implementation "org.lwjgl:lwjgl-par"
+        implementation "org.lwjgl:lwjgl-remotery"
+        implementation "org.lwjgl:lwjgl-rpmalloc"
+        implementation "org.lwjgl:lwjgl-shaderc"
+        implementation "org.lwjgl:lwjgl-sse"
+        implementation "org.lwjgl:lwjgl-stb"
+        implementation "org.lwjgl:lwjgl-tinyexr"
+        implementation "org.lwjgl:lwjgl-tinyfd"
+        implementation "org.lwjgl:lwjgl-tootle"
+        implementation "org.lwjgl:lwjgl-vma"
+        implementation "org.lwjgl:lwjgl-vulkan"
+        implementation "org.lwjgl:lwjgl-xxhash"
+        implementation "org.lwjgl:lwjgl-yoga"
+        implementation "org.lwjgl:lwjgl-zstd"
+        runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-assimp::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-bgfx::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-jemalloc::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-libdivide::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-llvm::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-lmdb::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-lz4::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-meow::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-nuklear::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-opengles::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-openvr::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-opus::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-ovr::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-par::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-remotery::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-rpmalloc::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-sse::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-tinyexr::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-tinyfd::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-tootle::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-vma::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-xxhash::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-yoga::$lwjglNatives"
+        runtimeOnly "org.lwjgl:lwjgl-zstd::$lwjglNatives"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
