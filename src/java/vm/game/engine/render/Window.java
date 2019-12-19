@@ -1,12 +1,12 @@
-package vm.game.engine.render;
+package java.vm.game.engine.render;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import vm.game.engine.input.InputHandler;
-import vm.game.engine.maths.Vector3f;
+import java.vm.game.engine.input.InputHandler;
+import java.vm.game.engine.maths.Vector3f;
 
 public class Window {
     private int width;
