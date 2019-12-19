@@ -1,15 +1,15 @@
-package java.vm.game.engine.render;
+package game.engine.render;
 
 //import engine.graphics.Mesh;
 //import engine.graphics.Renderer;
 //import engine.graphics.Vertex;
 //import engine.maths.Vector3f;
 import org.lwjgl.glfw.GLFW;
-import java.vm.game.engine.input.InputHandler;
-import java.vm.game.engine.maths.Vector3f;
-import java.vm.game.engine.render.graphics.Mesh;
-import java.vm.game.engine.render.graphics.Renderer;
-import java.vm.game.engine.render.graphics.Vertex;
+import game.engine.input.InputHandler;
+import game.engine.maths.Vector3f;
+import game.engine.render.graphics.Mesh;
+import game.engine.render.graphics.Renderer;
+import game.engine.render.graphics.Vertex;
 
 
 public class RenderHandler implements Runnable {

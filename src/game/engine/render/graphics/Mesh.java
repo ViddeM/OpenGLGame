@@ -1,4 +1,4 @@
-package java.vm.game.engine.render.graphics;
+package game.engine.render.graphics;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

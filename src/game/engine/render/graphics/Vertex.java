@@ -1,6 +1,6 @@
-package java.vm.game.engine.render.graphics;
+package game.engine.render.graphics;
 
-import java.vm.game.engine.maths.Vector3f;
+import game.engine.maths.Vector3f;
 
 public class Vertex {
     private Vector3f position;

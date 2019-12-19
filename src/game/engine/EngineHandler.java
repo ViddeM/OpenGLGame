@@ -1,6 +1,6 @@
-package java.vm.game.engine;
+package game.engine;
 
-import java.vm.game.engine.render.RenderHandler;
+import game.engine.render.RenderHandler;
 
 public class EngineHandler {
     private RenderHandler renderer;

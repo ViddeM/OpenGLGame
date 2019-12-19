@@ -1,4 +1,4 @@
-package java.vm.game.engine.maths;
+package game.engine.maths;
 
 public class Vector3f {
     private float x;
