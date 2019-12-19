@@ -19,7 +19,5 @@ public class Vector3f {
         return y;
     }
 
-    public float getZ() {
-        return z;
-    }
+    public float getZ() {return z; }
 }

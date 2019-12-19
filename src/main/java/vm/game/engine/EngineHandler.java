@@ -3,10 +3,14 @@ package vm.game.engine;
 import vm.game.engine.render.RenderHandler;
 
 public class EngineHandler {
-    private Thread renderer;
+    private RenderHandler renderer;
 
     public EngineHandler() {
+        renderer = new RenderHandler();
+        renderer.run();
+        /*
         renderer = new Thread(new RenderHandler(), "Renderer");
         renderer.start();
+        */
     }
 }

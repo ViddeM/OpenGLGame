@@ -11,6 +11,8 @@ import vm.game.engine.maths.Vector3f;
 public class Window {
     private int width;
     private int height;
+    private int[] windowX;
+    private int[] windowY;
     private String title;
     private long window;
     private long currTime;
@@ -45,7 +47,9 @@ public class Window {
         }
 
         videoMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-        GLFW.glfwSetWindowPos(window, (videoMode.width() - width) / 2, (videoMode.height() - height) / 2);
+        windowX = new int[] {(videoMode.width() - width) / 2};
+        windowY = new int[] {(videoMode.height() - height) / 2};
+        GLFW.glfwSetWindowPos(window, windowX[0], windowY[0]);
         GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -97,6 +101,14 @@ public class Window {
 
     public boolean shouldClose() {
         return GLFW.glfwWindowShouldClose(window);
+    }
+
+    public void destroy() {
+        input.destroy();
+        sizeCallback.free();
+        GLFW.glfwWindowShouldClose(window);
+        GLFW.glfwDestroyWindow(window);
+        GLFW.glfwTerminate();
     }
 
     public void setBackgroundColor(float r, float g, float b) {
