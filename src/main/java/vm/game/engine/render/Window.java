@@ -6,6 +6,7 @@ import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import vm.game.engine.input.InputHandler;
+import vm.game.engine.maths.Vector3f;
 
 public class Window {
     private int width;
@@ -16,9 +17,7 @@ public class Window {
     private long time;
     private int framesThisSec;
     private InputHandler input;
-    private float backgroundR;
-    private float backgroundG;
-    private float backgroundB;
+    private Vector3f background;
     private GLFWWindowSizeCallback sizeCallback;
     private boolean isResized;
     private boolean isFullscreen;
@@ -28,6 +27,7 @@ public class Window {
         this.width = width;
         this.height = height;
         this.title = title;
+        background = new Vector3f(0, 0,0);
     }
 
     public void create() {
@@ -48,6 +48,7 @@ public class Window {
         GLFW.glfwSetWindowPos(window, (videoMode.width() - width) / 2, (videoMode.height() - height) / 2);
         GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
 
         createCallbacks();
 
@@ -68,6 +69,7 @@ public class Window {
         GLFW.glfwSetKeyCallback(window, input.getKeyboardCallback());
         GLFW.glfwSetCursorPosCallback(window, input.getMouseMoveCallback());
         GLFW.glfwSetMouseButtonCallback(window, input.getMouseButtonsCallback());
+        GLFW.glfwSetScrollCallback(window, input.getMouseScrollCallback());
         GLFW.glfwSetWindowSizeCallback(window, sizeCallback);
     }
 
@@ -77,8 +79,8 @@ public class Window {
             isResized = false;
         }
 
-        GL11.glClearColor(backgroundR, backgroundG, backgroundB, 1.0f);
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glClearColor(background.getX(), background.getY(), background.getZ(), 1.0f);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GLFW.glfwPollEvents();
         framesThisSec++;
         currTime = System.currentTimeMillis();
@@ -98,9 +100,7 @@ public class Window {
     }
 
     public void setBackgroundColor(float r, float g, float b) {
-        backgroundR = r;
-        backgroundG = g;
-        backgroundB = b;
+        background = new Vector3f(r, g, b);
     }
 
     public void setFullscreen(boolean isFullscreen) {
@@ -111,7 +111,9 @@ public class Window {
             height = videoMode.height();
             GLFW.glfwSetWindowMonitor(window, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, 0);
         } else {
-            GLFW.glfwSetWindowMonitor(window, 0, 0, 0, width, height, 0);
+            width = 2000;
+            height = 1500;
+            GLFW.glfwSetWindowMonitor(window, 0,(videoMode.width() - width) / 2, (videoMode.height()) / 2, width, height, 0);
         }
     }
 
