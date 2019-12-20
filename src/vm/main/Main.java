@@ -1,13 +1,13 @@
-package main;
+package vm.main;
 
 import org.lwjgl.glfw.GLFW;
 
-import engine.graphics.Mesh;
-import engine.graphics.Renderer;
-import engine.graphics.Vertex;
-import engine.io.Input;
-import engine.io.Window;
-import engine.maths.Vector3f;
+import vm.engine.graphics.Mesh;
+import vm.engine.graphics.Renderer;
+import vm.engine.graphics.Vertex;
+import vm.engine.io.Input;
+import vm.engine.io.Window;
+import vm.engine.maths.Vector3f;
 
 public class Main implements Runnable {
 	public Thread game;
@@ -26,7 +26,7 @@ public class Main implements Runnable {
 		});
 	
 	public void start() {
-		game = new Thread(this, "game");
+		game = new Thread(this, "vm/game");
 		game.start();
 	}
 	

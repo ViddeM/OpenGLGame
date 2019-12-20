@@ -1,6 +1,6 @@
-package game;
+package vm.game;
 
-import game.engine.EngineHandler;
+import vm.game.engine.EngineHandler;
 
 public class Main {
     public static void main(String[] args) {

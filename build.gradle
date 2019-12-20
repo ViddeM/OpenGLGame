@@ -1,7 +1,9 @@
+import org.gradle.internal.os.OperatingSystem
+
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
@@ -19,7 +21,15 @@ allprojects {
     ext {
         appName = "Viddes OpenGL app"
         lwjglVersion = "3.2.3"
-        lwjglNatives = "natives-windows"
+
+        switch (OperatingSystem.current()) {
+            case OperatingSystem.LINUX:
+                lwjglNatives = "natives-linux"
+                break
+            case OperatingSystem.WINDOWS:
+                lwjglNatives = "natives-windows"
+                break
+        }
     }
 
     repositories {
@@ -87,7 +97,7 @@ project(":") {
         maxWarnings 0
     }
     checkstyleMain {
-        source = "src/main"
+        source = "src/vm.game"
     }
     tasks.withType(Checkstyle) {
         reports {
@@ -110,8 +120,8 @@ project(":") {
                 'org.junit.jupiter:junit-jupiter-api:5.1.0'
         )
         testRuntimeOnly(
-                'org.junit.jupiter:junit-jupiter-engine:5.1.0',
-                'org.junit.vintage:junit-vintage-engine:5.1.0'
+                'org.junit.jupiter:junit-jupiter-vm.engine:5.1.0',
+                'org.junit.vintage:junit-vintage-vm.engine:5.1.0'
         )
 
         implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
@@ -139,7 +149,6 @@ project(":") {
         implementation "org.lwjgl:lwjgl-opengles"
         implementation "org.lwjgl:lwjgl-openvr"
         implementation "org.lwjgl:lwjgl-opus"
-        implementation "org.lwjgl:lwjgl-ovr"
         implementation "org.lwjgl:lwjgl-par"
         implementation "org.lwjgl:lwjgl-remotery"
         implementation "org.lwjgl:lwjgl-rpmalloc"
@@ -172,7 +181,6 @@ project(":") {
         runtimeOnly "org.lwjgl:lwjgl-opengles::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-openvr::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-opus::$lwjglNatives"
-        runtimeOnly "org.lwjgl:lwjgl-ovr::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-par::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-remotery::$lwjglNatives"
         runtimeOnly "org.lwjgl:lwjgl-rpmalloc::$lwjglNatives"

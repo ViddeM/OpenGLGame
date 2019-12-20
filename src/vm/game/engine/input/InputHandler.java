@@ -1,4 +1,4 @@
-package game.engine.input;
+package vm.game.engine.input;
 
 import org.lwjgl.glfw.*;
 

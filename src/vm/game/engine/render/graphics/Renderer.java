@@ -1,4 +1,4 @@
-package game.engine.render.graphics;
+package vm.game.engine.render.graphics;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;

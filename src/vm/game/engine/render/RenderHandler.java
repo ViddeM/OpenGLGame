@@ -1,15 +1,11 @@
-package game.engine.render;
+package vm.game.engine.render;
 
-//import engine.graphics.Mesh;
-//import engine.graphics.Renderer;
-//import engine.graphics.Vertex;
-//import engine.maths.Vector3f;
 import org.lwjgl.glfw.GLFW;
-import game.engine.input.InputHandler;
-import game.engine.maths.Vector3f;
-import game.engine.render.graphics.Mesh;
-import game.engine.render.graphics.Renderer;
-import game.engine.render.graphics.Vertex;
+import vm.game.engine.input.InputHandler;
+import vm.game.engine.maths.Vector3f;
+import vm.game.engine.render.graphics.Mesh;
+import vm.game.engine.render.graphics.Renderer;
+import vm.game.engine.render.graphics.Vertex;
 
 
 public class RenderHandler implements Runnable {
@@ -53,9 +49,6 @@ public class RenderHandler implements Runnable {
     }
 
     private Mesh createHexagon(float scale) {
-        float offX = (float)Math.sin(60) * scale;
-        float offY = (float)Math.cos(60) * scale;
-
         float sideLength = scale;
         float height = (float)Math.sqrt(3) * scale;
 
